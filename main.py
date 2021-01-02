@@ -45,6 +45,14 @@ def save():
             with open("data.json", "r") as data_file:
                 # Reading old data
                 data = json.load(data_file)
+                if website in data:
+                    update = messagebox.askyesno("Warning", f"There is already a password saved for {website}.\n"
+                                                            f"Would you like to overwrite?")
+                    if update:
+                        data[website]["password"] = password
+                        data[website]["email"] = email
+                    else:
+                        return
         except FileNotFoundError:
             with open("data.json", "w") as data_file:
                 json.dump(new_data, data_file, indent=4)
